@@ -20,7 +20,7 @@ import string
 import datetime
 
 # Create your views here.
-#@login_required
+@login_required
 @csrf_exempt
 def index(request):
     return render(request, 'web/index.html')
