@@ -1,10 +1,34 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib import auth
 from django.conf import settings
-from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import timezone
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render_to_response
+from django.template import RequestContext, loader, Context
+from django.db.models import Q
+from django.db.models import Count
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User, Group
+import json
+import models
+import os
+import sys
+import traceback
+import json
+import time
+import string
+import datetime
 
 # Create your views here.
-def fetch_current_price():
+#@login_required
+@csrf_exempt
+def index(request):
+    return render(request, 'web/index.html')
+
+@csrf_exempt
+def fetch_current_price(request):
 	http_response_json = {}
 	http_response_json['status'] = False
 	http_response_json['message'] = ''
@@ -46,5 +70,3 @@ def fetch_current_price():
 		http_response_json['message'] = "Exception occured: %s"%(err)
 	finally:
 		return HttpResponse(http_response_json, content_type='application/json')
-
-		(page_data_save, page_data_save_status)= models.Page.objects.update_or_create(page_id=str(page_data['id']), defaults={'page_name': page_data['name'],'likes': page_data['likes'],'talking_about_count': page_data['talking_about_count']})
