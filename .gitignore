@@ -1,1 +1,4 @@
 *.pyc
+*.sqlite3
+*.log
+dcb_hackathon/code/agri_hedge/web/migrations/*.py
