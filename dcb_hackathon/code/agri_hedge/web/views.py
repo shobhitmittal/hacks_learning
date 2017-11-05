@@ -127,7 +127,6 @@ def fetch_current_price(request):
 					modal_price = final_list[str_count]['modal_price']
 					arrival_date = final_list[str_count]['arrival_date']
 					updated_at = str(timezone.now())
-					print state, district, market, commodity, variety, min_price, max_price, modal_price, arrival_date, updated_at
 					
 					final_list[str_count]['composite_cp_id'] = (state+'_'+district+'_'+market+'_'+commodity+'_'+variety).lower()
 
