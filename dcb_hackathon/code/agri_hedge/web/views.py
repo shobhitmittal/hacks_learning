@@ -27,7 +27,33 @@ import requests
 @login_required
 @csrf_exempt
 def index(request):
-    return render(request, 'web/index.html')
+	return render(request, 'web/index.html')
+
+@login_required
+@csrf_exempt
+def check_god_mode_inventory(request):
+	data = models.transaction_table.objects.values()
+	print data
+	return render(request, 'web/index.html')
+
+@login_required
+@csrf_exempt
+def loan_inventory(request):
+	c = {}
+	c['message'] = "To be done in Future."
+	return render(request, 'web/message.html', c)
+
+@login_required
+@csrf_exempt
+def buy_position(request):
+	return render(request, 'web/index.html')
+
+@login_required
+@csrf_exempt
+def check_user_inventory(request):
+	data = models.transaction_table.objects.filter(User=request.user.id).values()
+	print data
+	return render(request, 'web/index.html')
 
 @csrf_exempt
 def fetch_current_price(request):
