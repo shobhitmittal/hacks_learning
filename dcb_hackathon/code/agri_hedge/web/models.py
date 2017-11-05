@@ -47,3 +47,17 @@ class short_table(models.Model):
     duration = models.CharField(max_length=1000)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
+
+class current_price_table(models.Model):
+    composite_cp_id = models.CharField(max_length=500, primary_key=True)
+    commodity = models.CharField(max_length=500)
+    variety = models.CharField(max_length=500)
+    state = models.CharField(max_length=500)
+    district = models.CharField(max_length=500)
+    market = models.CharField(max_length=500)
+    min_price = models.CharField(max_length=500)
+    max_price = models.CharField(max_length=500)
+    modal_price = models.CharField(max_length=500)
+    arrival_date = models.CharField(max_length=500)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
