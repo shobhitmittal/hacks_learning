@@ -4,3 +4,4 @@
 *.orig
 dcb_hackathon/code/agri_hedge/web/migrations/*.py
 dcb_hackathon/code/agri_hedge/static/*
+dcb_hackathon/code/agri_hedge/agri_hedge/settings.py
