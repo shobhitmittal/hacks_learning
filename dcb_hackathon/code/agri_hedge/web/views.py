@@ -46,7 +46,7 @@ def loan_inventory(request):
 @login_required
 @csrf_exempt
 def buy_position(request):
-	return render(request, 'web/index.html')
+	return render(request, 'web/buy_position.html')
 
 @login_required
 @csrf_exempt
