@@ -46,7 +46,50 @@ def loan_inventory(request):
 @login_required
 @csrf_exempt
 def buy_position(request):
-	return render(request, 'web/index.html')
+	c = {}
+	state = request.POST.get('state')
+	if state is not None:
+		district = request.POST.get('district')
+		if district is not None:
+			market = request.POST.get('market')
+			if market is not None:
+				commodity = request.POST.get('commodity')
+				if commodity is not None:
+					variety = request.POST.get('variety')
+					if variety is not None:
+						current_price_data = models.current_price_table.objects.filter(state=state, district=district, commodity=commodity, variety=variety).values()
+					else:
+						current_price_data = models.current_price_table.objects.filter(state=state, district=district, commodity=commodity).values()
+				else:
+					current_price_data = models.current_price_table.objects.filter(state=state, district=district, market=market).values()
+			else:
+				current_price_data = models.current_price_table.objects.filter(state=state, district=district).values()
+		else:
+			current_price_data = models.current_price_table.objects.filter(state=state).values()
+	else:
+		print 'No value passed.'
+	#price = request.POST.get('price')
+	for data_iter in current_price_datas:
+		#{'commodity': u'Groundnut', 'district': u'Anantapur', 'variety': u'Local', 'state': u'Andhra Pradesh', 'min_price': u'4200', 'modal_price': u'4400', 'max_price': u'4600', 'market': u'Anantapur'}
+		pass
+	return render(request, 'web/buy_position.html', c)
+
+@login_required
+@csrf_exempt
+def handle_buy_position(request):
+	c = {}
+
+	User = request.user.id
+	print current_price_datas
+	quantity = request.POST.get('quantity')
+	crop_type = request.POST.get('crop_type')
+	duration = request.POST.get('duration')
+	location = request.POST.get('location')
+	premium_expected = request.POST.get('premium_expected')
+	amount_owned = request.POST.get('amount_owned')
+	payment_status = request.POST.get('payment_status')
+
+	return render(request, 'web/buy_position.html')
 
 @login_required
 @csrf_exempt

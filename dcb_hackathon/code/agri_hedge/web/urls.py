@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^loan_inventory$', views.loan_inventory, name='loan_inventory'),
     url(r'^buy_position$', views.buy_position, name='buy_position'),
     url(r'^check_user_inventory$', views.check_user_inventory, name='check_user_inventory'),
+    url(r'^handle_buy_position$', views.handle_buy_position, name='handle_buy_position'),
 ]
 
