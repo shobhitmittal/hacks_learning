@@ -47,7 +47,9 @@ def loan_inventory(request):
 @csrf_exempt
 def buy_position(request):
 	c = {}
+	print request.POST
 	state = request.POST.get('state')
+	print state
 	if state is not None:
 		district = request.POST.get('district')
 		if district is not None:
@@ -57,21 +59,31 @@ def buy_position(request):
 				if commodity is not None:
 					variety = request.POST.get('variety')
 					if variety is not None:
-						current_price_data = models.current_price_table.objects.filter(state=state, district=district, commodity=commodity, variety=variety).values()
+						current_price_datas = models.current_price_table.objects.filter(state=state, district=district, commodity=commodity, variety=variety).values()
 					else:
-						current_price_data = models.current_price_table.objects.filter(state=state, district=district, commodity=commodity).values()
+						current_price_datas = models.current_price_table.objects.filter(state=state, district=district, commodity=commodity).values()
 				else:
-					current_price_data = models.current_price_table.objects.filter(state=state, district=district, market=market).values()
+					current_price_datas = models.current_price_table.objects.filter(state=state, district=district, market=market).values()
 			else:
-				current_price_data = models.current_price_table.objects.filter(state=state, district=district).values()
+				current_price_datas = models.current_price_table.objects.filter(state=state, district=district).values()
 		else:
-			current_price_data = models.current_price_table.objects.filter(state=state).values()
+			current_price_datas = models.current_price_table.objects.filter(state=state).values()
 	else:
-		print 'No value passed.'
-	#price = request.POST.get('price')
-	for data_iter in current_price_datas:
-		#{'commodity': u'Groundnut', 'district': u'Anantapur', 'variety': u'Local', 'state': u'Andhra Pradesh', 'min_price': u'4200', 'modal_price': u'4400', 'max_price': u'4600', 'market': u'Anantapur'}
-		pass
+		current_price_datas = models.current_price_table.objects.values()
+		c['state_dict'] = {}
+		c['state_list'] = []
+		for data_iter in current_price_datas:
+			if 'state' in data_iter and data_iter['state']:
+				str_state = data_iter['state']
+				if str_state not in c['state_dict']:
+					c['state_dict'][str_state] = '1'
+				else:
+					pass
+			else:
+				print 'state key not found.'
+		c['state_list'] = c['state_dict'].keys()
+
+	#{'commodity': u'Groundnut', 'district': u'Anantapur', 'variety': u'Local', 'state': u'Andhra Pradesh', 'min_price': u'4200', 'modal_price': u'4400', 'max_price': u'4600', 'market': u'Anantapur'}
 	return render(request, 'web/buy_position.html', c)
 
 @login_required
@@ -80,7 +92,6 @@ def handle_buy_position(request):
 	c = {}
 
 	User = request.user.id
-	print current_price_datas
 	quantity = request.POST.get('quantity')
 	crop_type = request.POST.get('crop_type')
 	duration = request.POST.get('duration')
